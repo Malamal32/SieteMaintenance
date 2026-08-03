@@ -204,9 +204,7 @@ body {
 
 .department-name {
     display: block;
-
     width: 100%;
-
     text-align: center;
 }
 
@@ -230,7 +228,7 @@ body {
 
 
 /* =========================
-   Department Dropdown Arrow
+   Department Arrow
 ========================= */
 
 .dropdown-icon {
@@ -401,7 +399,7 @@ body {
 
 
 /* =========================
-   Machine Dropdown Grid
+   Machine List
 ========================= */
 
 .machine-list {
@@ -411,9 +409,18 @@ body {
         repeat(2, minmax(0, 1fr));
 
     gap: 9px;
+
+    align-items: start;
 }
 
+
+/* =========================
+   Individual Machine Card
+========================= */
+
 .machine-dropdown {
+    width: 100%;
+
     background-color: #ffffff;
 
     border: 1px solid #d2e1ef;
@@ -421,14 +428,20 @@ body {
 
     overflow: hidden;
 
+    box-shadow:
+        0 3px 8px rgba(17, 76, 130, 0.05);
+
     transition:
         border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
 }
 
 .machine-dropdown:hover {
+    transform: translateY(-1px);
+
     box-shadow:
-        0 4px 10px rgba(17, 76, 130, 0.08);
+        0 5px 12px rgba(17, 76, 130, 0.1);
 }
 
 
@@ -443,12 +456,12 @@ body {
 
     align-items: center;
 
+    width: 100%;
     min-height: 41px;
 
     padding: 11px 38px 11px 14px;
 
     color: #174e7c;
-
     background-color: #ffffff;
 
     font-size: 0.76rem;
@@ -481,11 +494,11 @@ body {
     right: 13px;
 
     font-size: 1rem;
+    font-weight: 700;
 
     transform: translateY(-50%);
 
-    transition:
-        transform 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
 .machine-dropdown[open] summary::after {
@@ -496,18 +509,17 @@ body {
 
 
 /* =========================
-   Machine Resource Links
+   Stacked Machine Links
 ========================= */
 
 .machine-resources {
-    display: grid;
+    display: flex;
 
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
+    flex-direction: column;
 
-    gap: 6px;
+    gap: 8px;
 
-    padding: 9px;
+    padding: 10px;
 
     border-top: 1px solid #dce8f3;
 
@@ -518,34 +530,54 @@ body {
     display: flex;
 
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
-    min-height: 36px;
+    gap: 8px;
 
-    padding: 7px 4px;
+    width: 100%;
+    min-height: 38px;
+
+    padding: 8px 11px;
 
     color: #174e7c;
-
     background-color: #ffffff;
 
     border: 1px solid #d8e5f0;
-    border-radius: 5px;
+    border-radius: 6px;
 
-    font-size: 0.65rem;
+    font-size: 0.72rem;
     font-weight: 600;
 
-    text-align: center;
+    text-align: left;
     text-decoration: none;
 
     transition:
+        transform 0.2s ease,
         background-color 0.2s ease,
         border-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+        color 0.2s ease;
 }
 
 .machine-resources a:hover {
-    transform: translateY(-1px);
+    transform: translateX(2px);
+}
+
+.machine-resources a span {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 23px;
+    height: 23px;
+
+    border-radius: 5px;
+
+    background-color: #edf4fb;
+
+    font-size: 0.85rem;
 }
 
 
@@ -573,16 +605,31 @@ body {
     border-color: #57c9bd;
 }
 
-.chips-card .machine-dropdown summary:hover {
+.chips-card .machine-dropdown summary:hover,
+.chips-card .machine-dropdown[open] > summary {
     color: #117d75;
 
     background-color: #ebfbf8;
 }
 
-.chips-card .machine-resources a:hover {
+.chips-card .machine-resources {
+    background-color: #f3fcfa;
+}
+
+.chips-card .machine-resources a {
     color: #117d75;
 
-    background-color: #ebfbf8;
+    border-color: #cceee9;
+}
+
+.chips-card .machine-resources a span {
+    background-color: #e3f8f5;
+}
+
+.chips-card .machine-resources a:hover {
+    color: #0b716a;
+
+    background-color: #e1f8f4;
 
     border-color: #57c9bd;
 }
@@ -612,16 +659,31 @@ body {
     border-color: #ec79b7;
 }
 
-.tortillas-card .machine-dropdown summary:hover {
+.tortillas-card .machine-dropdown summary:hover,
+.tortillas-card .machine-dropdown[open] > summary {
     color: #a90060;
 
     background-color: #fff0f7;
 }
 
-.tortillas-card .machine-resources a:hover {
+.tortillas-card .machine-resources {
+    background-color: #fff7fb;
+}
+
+.tortillas-card .machine-resources a {
     color: #a90060;
 
-    background-color: #fff0f7;
+    border-color: #f1cade;
+}
+
+.tortillas-card .machine-resources a span {
+    background-color: #fde8f3;
+}
+
+.tortillas-card .machine-resources a:hover {
+    color: #930054;
+
+    background-color: #fde5f1;
 
     border-color: #ec79b7;
 }
@@ -723,10 +785,6 @@ summary:focus-visible {
 
     .machine-dropdown summary {
         font-size: 0.8rem;
-    }
-
-    .machine-resources {
-        grid-template-columns: 1fr;
     }
 
     .machine-resources a {
