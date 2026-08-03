@@ -89,10 +89,6 @@ body {
     letter-spacing: 0.6px;
 }
 
-
-/*
-   Full-width banner logo
-*/
 .site-logo {
     display: block;
 
@@ -214,10 +210,6 @@ body {
     text-align: center;
 }
 
-
-/*
-   Turquoise color from the logo
-*/
 .chips-card .department-title {
     background:
         linear-gradient(
@@ -227,10 +219,6 @@ body {
         );
 }
 
-
-/*
-   Pink and magenta color from the logo
-*/
 .tortillas-card .department-title {
     background:
         linear-gradient(
@@ -242,7 +230,7 @@ body {
 
 
 /* =========================
-   Dropdown Arrow
+   Department Dropdown Arrow
 ========================= */
 
 .dropdown-icon {
@@ -286,7 +274,7 @@ body {
 
 
 /* =========================
-   Dropdown Content
+   Department Content
 ========================= */
 
 .department-content {
@@ -411,7 +399,12 @@ body {
     font-weight: 700;
 }
 
-.machine-grid {
+
+/* =========================
+   Machine Dropdown Grid
+========================= */
+
+.machine-list {
     display: grid;
 
     grid-template-columns:
@@ -420,7 +413,30 @@ body {
     gap: 9px;
 }
 
-.machine-link {
+.machine-dropdown {
+    background-color: #ffffff;
+
+    border: 1px solid #d2e1ef;
+    border-radius: 7px;
+
+    overflow: hidden;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.machine-dropdown:hover {
+    box-shadow:
+        0 4px 10px rgba(17, 76, 130, 0.08);
+}
+
+
+/* =========================
+   Machine Name Button
+========================= */
+
+.machine-dropdown summary {
     position: relative;
 
     display: flex;
@@ -429,61 +445,119 @@ body {
 
     min-height: 41px;
 
-    padding: 11px 14px 11px 33px;
+    padding: 11px 38px 11px 14px;
 
     color: #174e7c;
 
     background-color: #ffffff;
 
-    border: 1px solid #d2e1ef;
-    border-radius: 7px;
-
     font-size: 0.76rem;
     font-weight: 600;
 
+    cursor: pointer;
+    user-select: none;
+
+    list-style: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.machine-dropdown summary::-webkit-details-marker {
+    display: none;
+}
+
+.machine-dropdown summary::marker {
+    content: "";
+}
+
+.machine-dropdown summary::after {
+    content: "⌄";
+
+    position: absolute;
+
+    top: 50%;
+    right: 13px;
+
+    font-size: 1rem;
+
+    transform: translateY(-50%);
+
+    transition:
+        transform 0.2s ease;
+}
+
+.machine-dropdown[open] summary::after {
+    transform:
+        translateY(-50%)
+        rotate(180deg);
+}
+
+
+/* =========================
+   Machine Resource Links
+========================= */
+
+.machine-resources {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 6px;
+
+    padding: 9px;
+
+    border-top: 1px solid #dce8f3;
+
+    background-color: #f8fbff;
+}
+
+.machine-resources a {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 36px;
+
+    padding: 7px 4px;
+
+    color: #174e7c;
+
+    background-color: #ffffff;
+
+    border: 1px solid #d8e5f0;
+    border-radius: 5px;
+
+    font-size: 0.65rem;
+    font-weight: 600;
+
+    text-align: center;
     text-decoration: none;
 
     transition:
         background-color 0.2s ease,
         border-color 0.2s ease,
-        transform 0.2s ease,
-        color 0.2s ease;
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.machine-link::before {
-    content: "›";
-
-    position: absolute;
-    left: 14px;
-
-    color: #1a75bb;
-
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.machine-link:hover {
-    transform: translateX(3px);
-
-    color: #0a4f88;
-
-    background-color: #eaf4fe;
-
-    border-color: #69a2d4;
+.machine-resources a:hover {
+    transform: translateY(-1px);
 }
 
 
 /* =========================
-   Department Link Accents
+   Chips Colors
 ========================= */
 
 .chips-card .featured-link {
     border-left-color: #27b6a8;
 }
 
-.chips-card .featured-link strong,
-.chips-card .machine-link::before {
+.chips-card .featured-link strong {
     color: #128c82;
 }
 
@@ -491,7 +565,21 @@ body {
     background-color: #e3f8f5;
 }
 
-.chips-card .machine-link:hover {
+.chips-card .machine-dropdown summary::after {
+    color: #128c82;
+}
+
+.chips-card .machine-dropdown[open] {
+    border-color: #57c9bd;
+}
+
+.chips-card .machine-dropdown summary:hover {
+    color: #117d75;
+
+    background-color: #ebfbf8;
+}
+
+.chips-card .machine-resources a:hover {
     color: #117d75;
 
     background-color: #ebfbf8;
@@ -500,12 +588,15 @@ body {
 }
 
 
+/* =========================
+   Tortillas Colors
+========================= */
+
 .tortillas-card .featured-link {
     border-left-color: #d70078;
 }
 
-.tortillas-card .featured-link strong,
-.tortillas-card .machine-link::before {
+.tortillas-card .featured-link strong {
     color: #c1006d;
 }
 
@@ -513,7 +604,21 @@ body {
     background-color: #fde8f3;
 }
 
-.tortillas-card .machine-link:hover {
+.tortillas-card .machine-dropdown summary::after {
+    color: #c1006d;
+}
+
+.tortillas-card .machine-dropdown[open] {
+    border-color: #ec79b7;
+}
+
+.tortillas-card .machine-dropdown summary:hover {
+    color: #a90060;
+
+    background-color: #fff0f7;
+}
+
+.tortillas-card .machine-resources a:hover {
     color: #a90060;
 
     background-color: #fff0f7;
@@ -612,8 +717,20 @@ summary:focus-visible {
         grid-template-columns: 1fr;
     }
 
-    .machine-grid {
+    .machine-list {
         grid-template-columns: 1fr;
+    }
+
+    .machine-dropdown summary {
+        font-size: 0.8rem;
+    }
+
+    .machine-resources {
+        grid-template-columns: 1fr;
+    }
+
+    .machine-resources a {
+        font-size: 0.75rem;
     }
 
 }
@@ -670,12 +787,6 @@ summary:focus-visible {
 
     .featured-link small {
         font-size: 0.7rem;
-    }
-
-    .machine-link {
-        padding-right: 10px;
-
-        font-size: 0.8rem;
     }
 
 }
