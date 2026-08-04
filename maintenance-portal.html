@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Searchable Siete Maintenance equipment, SOP, manual, parts, and troubleshooting portal.">
+    <title>Siete Maintenance Portal</title>
+    <link rel="stylesheet" href="portal-style.css?v=1">
+</head>
+<body>
+
+<header class="hero">
+    <div class="hero-inner">
+        <p class="eyebrow">Maintenance Knowledge Base</p>
+        <h1>Siete Maintenance</h1>
+        <p class="subtitle">Machines, SOPs, manuals, specifications, parts, and troubleshooting</p>
+
+        <div class="search-wrap">
+            <label class="sr-only" for="portal-search">Search maintenance documentation</label>
+            <input
+                id="portal-search"
+                type="search"
+                placeholder="Search machine, model, part, manual, or problem..."
+                autocomplete="off"
+            >
+            <button id="clear-search" type="button">Clear</button>
+        </div>
+
+        <div class="filter-row" aria-label="Department filters">
+            <button class="filter-button active" data-department="All" type="button">All</button>
+            <button class="filter-button" data-department="Tortillas" type="button">Tortillas</button>
+            <button class="filter-button" data-department="Chips" type="button">Chips</button>
+        </div>
+    </div>
+</header>
+
+<main class="page-shell">
+
+    <section class="summary-bar" aria-label="Portal summary">
+        <div>
+            <strong id="machine-count">0</strong>
+            <span>Machines</span>
+        </div>
+        <div>
+            <strong id="result-count">0</strong>
+            <span>Results shown</span>
+        </div>
+        <div>
+            <strong>3</strong>
+            <span>Resource types</span>
+        </div>
+    </section>
+
+    <section>
+        <div class="section-heading">
+            <div>
+                <p class="section-label">Equipment Directory</p>
+                <h2>Maintenance Resources</h2>
+            </div>
+        </div>
+
+        <div id="results-grid" class="machine-grid"></div>
+
+        <div id="empty-state" class="empty-state" hidden>
+            <h2>No matching equipment found</h2>
+            <p>Try a machine name, model, manufacturer, part, or troubleshooting term.</p>
+        </div>
+    </section>
+
+    <section class="future-search">
+        <h2>Full-document search</h2>
+        <p>
+            This first version searches the equipment directory and keywords in
+            <code>portal-data.js</code>. Full text from manuals and SOPs can be added later
+            by creating a searchable text index for each document.
+        </p>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <p>Siete Maintenance Documentation</p>
+    <a href="index.html">Return to Current Homepage</a>
+</footer>
+
+<script src="portal-data.js"></script>
+<script src="portal-search.js"></script>
+</body>
+</html>
