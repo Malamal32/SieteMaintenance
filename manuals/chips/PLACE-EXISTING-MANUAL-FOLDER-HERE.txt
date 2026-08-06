@@ -1,0 +1,9 @@
+Place your existing manual folder here:
+
+ishida-bagger/
+└── atlas-204-234-maintenance/
+    ├── 01-cover-preface-and-contents.html
+    ├── 02-safety.html
+    └── all remaining existing section files
+
+Do not rename the individual section files.
