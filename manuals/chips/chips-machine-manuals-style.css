@@ -63,9 +63,6 @@ body {
     font-size: 0.78rem;
     font-weight: 650;
     text-decoration: none;
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
 }
 
 .home-link:hover {
@@ -173,19 +170,12 @@ body {
     box-shadow:
         0 4px 11px rgba(25, 72, 112, 0.07);
     text-decoration: none;
-    transition:
-        transform 0.2s ease,
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
 }
 
 .manual-card:hover {
     transform: translateY(-2px);
     background-color: #f1f9ff;
     border-color: #9ec8e3;
-    box-shadow:
-        0 8px 18px rgba(25, 72, 112, 0.12);
 }
 
 .manual-icon {
@@ -268,17 +258,7 @@ body {
     text-decoration: none;
 }
 
-.page-footer a:hover {
-    text-decoration: underline;
-}
-
-a:focus-visible {
-    outline: 3px solid #ffbf47;
-    outline-offset: 3px;
-}
-
 @media screen and (max-width: 600px) {
-
     body {
         padding: 15px 9px;
     }
@@ -300,11 +280,9 @@ a:focus-visible {
         align-items: flex-start;
         padding: 17px 20px;
     }
-
 }
 
 @media screen and (max-width: 420px) {
-
     body {
         padding: 0;
     }
@@ -337,5 +315,4 @@ a:focus-visible {
     .content-section {
         padding: 17px 14px;
     }
-
 }
