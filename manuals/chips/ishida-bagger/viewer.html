@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ishida Bagger Manual Viewer</title>
+    <style>
+:root {
+    --blue-dark: #0f4f82;
+    --blue: #146aa5;
+    --blue-light: #2588c7;
+    --pale: #eef8ff;
+    --border: #cbddea;
+    --text: #172033;
+    --muted: #617487;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background: #eaf1f6;
+}
+
+.viewer-shell {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.viewer-header {
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue) 55%, var(--blue-light));
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+    z-index: 10;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 16px;
+}
+
+.header-copy {
+    min-width: 0;
+}
+
+.eyebrow {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: clamp(1.05rem, 3vw, 1.45rem);
+}
+
+.header-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 8px;
+}
+
+.header-actions a,
+.header-actions button {
+    min-height: 36px;
+    padding: 7px 10px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 7px;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.current-section {
+    padding: 8px 16px 11px;
+    color: #e4f4ff;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 0.77rem;
+}
+
+.viewer-layout {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+
+.section-panel {
+    overflow-y: auto;
+    padding: 14px;
+    background: #ffffff;
+    border-right: 1px solid var(--border);
+}
+
+.section-panel h2 {
+    margin-bottom: 10px;
+    color: #123f63;
+    font-size: 1rem;
+}
+
+.section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.section-link {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 9px;
+    align-items: start;
+    padding: 9px;
+    color: #19486d;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.76rem;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.section-link:hover {
+    background: var(--pale);
+}
+
+.section-link.active {
+    color: #ffffff;
+    background: var(--blue);
+    border-color: var(--blue);
+}
+
+.section-number {
+    display: inline-flex;
+    min-height: 26px;
+    align-items: center;
+    justify-content: center;
+    background: rgba(20, 106, 165, 0.1);
+    border-radius: 5px;
+    font-size: 0.68rem;
+}
+
+.section-link.active .section-number {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.pdf-area {
+    min-width: 0;
+    min-height: 0;
+    padding: 10px;
+    background: #dfe7ed;
+}
+
+.pdf-frame {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 105px);
+    min-height: 620px;
+    background: #ffffff;
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.16);
+}
+
+.mobile-note {
+    display: none;
+    margin-bottom: 8px;
+    padding: 9px 11px;
+    color: var(--muted);
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 0.72rem;
+}
+
+@media (max-width: 760px) {
+    .header-top {
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    h1 {
+        max-width: 54vw;
+        font-size: 1rem;
+    }
+
+    .header-actions a,
+    .header-actions button {
+        min-height: 33px;
+        padding: 6px 8px;
+        font-size: 0.68rem;
+    }
+
+    .current-section {
+        padding: 7px 10px 9px;
+    }
+
+    .viewer-layout {
+        display: block;
+    }
+
+    .section-panel {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .section-panel h2 {
+        display: none;
+    }
+
+    .section-list {
+        width: max-content;
+        max-width: none;
+        flex-direction: row;
+    }
+
+    .section-link {
+        width: 210px;
+        min-height: 58px;
+    }
+
+    .pdf-area {
+        padding: 6px;
+    }
+
+    .mobile-note {
+        display: block;
+    }
+
+    .pdf-frame {
+        height: calc(100vh - 190px);
+        min-height: 520px;
+    }
+}
+</style>
+</head>
+<body>
+    <main class="viewer-shell">
+        <header class="viewer-header">
+            <div class="header-top">
+                <div class="header-copy">
+                    <p class="eyebrow">Chips Maintenance · Ishida Bagger Manuals</p>
+                    <h1 id="manual-title">Manual Viewer</h1>
+                </div>
+                <nav class="header-actions">
+                    <a href="../ishida-bagger.html">Manuals</a>
+                    <a id="open-pdf" href="#" target="_blank" rel="noopener">Open PDF</a>
+                </nav>
+            </div>
+            <p class="current-section" id="current-section">Loading section…</p>
+        </header>
+
+        <div class="viewer-layout">
+            <aside class="section-panel">
+                <h2>Manual Sections</h2>
+                <nav class="section-list" id="section-list"></nav>
+            </aside>
+
+            <section class="pdf-area">
+                <p class="mobile-note">
+                    Some mobile browsers open PDFs outside the embedded viewer.
+                    Use “Open PDF” above if the document does not appear here.
+                </p>
+                <iframe
+                    id="pdf-frame"
+                    class="pdf-frame"
+                    title="PDF manual viewer"
+                ></iframe>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const manuals = {"maintenance": {"title": "ATLAS-204/234 Maintenance Manual", "description": "Safety, inspections, replacement and adjustment, controls, electrical systems, software, drivers, ITPS, and optional equipment.", "icon": "📘", "pdf": "pdfs/atlas-204-234-maintenance.pdf", "language": "English", "sections": [["Cover, Preface, and Table of Contents", 1], ["Safety", 9], ["Daily Inspections", 23], ["Periodic Inspections", 34], ["End Seal Unit - Replacement and Adjustment", 44], ["Back Seal Unit - Replacement and Adjustment", 61], ["Pull Belt, Dancer Roller, Tracking, and Film Unwind", 69], ["RCU and Printer Units", 79], ["Control Panel Maintenance Service", 92], ["Electrical System and Sensors", 100], ["Shaker and Poker Options", 111], ["Web-RCU and Main-Body Software", 119], ["Electrical Boards and Interfaces", 152], ["Motor Driver Operation", 183], ["Vacuum, Pressure, ITPS, and Nitrogen Options", 226]]}, "prints204": {"title": "204 Electrical and Pneumatic Prints", "description": "MCU and SCU board layouts, block diagrams, XT1 wiring, total wiring, air-line diagram, and manifold arrangement.", "icon": "📗", "pdf": "pdfs/atlas-204-electrical-pneumatic-prints.pdf", "language": "English", "sections": [["MCU Board", 1], ["MCU Board Block Diagram", 2], ["Wiring of XT1 Block", 3], ["SCU1 Board", 4], ["SCU1 Board Block Diagram", 5], ["SCU2 Board", 6], ["SCU2 Board Block Diagram", 7], ["Total Diagram", 8], ["Air Line Diagram", 9], ["Manifold Arrangement", 10]]}, "spanish": {"title": "Manual en Español ATLAS-204/234", "description": "Manual de uso con seguridad, instalación, operación, producción, limpieza, mantenimiento periódico y resolución de problemas.", "icon": "🇪🇸", "pdf": "pdfs/atlas-204-234-manual-espanol.pdf", "language": "Español", "sections": [["Portada, Información e Índice", 1], ["Seguridad", 13], ["Introducción e Instalación", 23], ["Operación y Funciones de la RCU", 31], ["Producción", 99], ["Procedimientos de Limpieza", 125], ["Mantenimiento Periódico", 131], ["Resolución de Problemas e Índice", 151]]}, "parts234": {"title": "ATLAS-234R Parts Manual", "description": "Illustrated parts drawings and lists for the main body, seal units, tracking, film carrier, air chuck, remote-control box, and electrical units.", "icon": "🧩", "pdf": "pdfs/atlas-234r-parts-manual.pdf", "language": "English", "sections": [["Cover, Instructions, Locator, and Contents", 1], ["Main Body Units", 8], ["End Seal Units", 18], ["Back Seal Units", 44], ["Tracking Units", 66], ["Film Carrier Units", 70], ["Air Chuck Units", 80], ["Remote Control Box Units", 84], ["Electrical Units", 96]]}, "parts204": {"title": "ATLAS-204R-ITPS Parts Manual", "description": "Illustrated parts drawings and lists for the main body, seal units, film carrier, air chuck, remote controls, electrical systems, ITPS, and options.", "icon": "🧩", "pdf": "pdfs/atlas-204r-itps-parts-manual.pdf", "language": "English", "sections": [["Cover, Instructions, Locator, and Contents", 1], ["Main Body and Air Units", 8], ["End Seal Units", 21], ["Back Seal Units", 39], ["Former, Tracking, and Registration Units", 57], ["Film Carrier and Rear Operation Units", 61], ["Air Chuck Units", 69], ["Remote Control and Printer Units", 75], ["Electrical and Driver Units", 89], ["Accessories and Optional Units", 107]]}};
+
+        const params = new URLSearchParams(window.location.search);
+        const manualKey = params.get("manual") || "maintenance";
+        const manual = manuals[manualKey] || manuals.maintenance;
+
+        const requestedPage = Number.parseInt(params.get("page"), 10);
+        const page = Number.isFinite(requestedPage) && requestedPage > 0
+            ? requestedPage
+            : manual.sections[0][1];
+
+        const title = document.getElementById("manual-title");
+        const currentSection = document.getElementById("current-section");
+        const sectionList = document.getElementById("section-list");
+        const pdfFrame = document.getElementById("pdf-frame");
+        const openPdf = document.getElementById("open-pdf");
+
+        document.documentElement.lang = manual.language === "Español" ? "es" : "en";
+        document.title = manual.title + " - Ishida Bagger Manuals";
+        title.textContent = manual.title;
+
+        let activeSectionIndex = 0;
+        manual.sections.forEach((section, index) => {
+            if (section[1] <= page) {
+                activeSectionIndex = index;
+            }
+        });
+
+        const activeSection = manual.sections[activeSectionIndex];
+        currentSection.textContent =
+            `${String(activeSectionIndex + 1).padStart(2, "0")}. ${activeSection[0]} · PDF page ${page}`;
+
+        manual.sections.forEach((section, index) => {
+            const link = document.createElement("a");
+            link.className = "section-link" + (index === activeSectionIndex ? " active" : "");
+            link.href = `viewer.html?manual=${encodeURIComponent(manualKey)}&page=${section[1]}`;
+
+            const number = document.createElement("span");
+            number.className = "section-number";
+            number.textContent = String(index + 1).padStart(2, "0");
+
+            const label = document.createElement("span");
+            label.textContent = section[0];
+
+            link.append(number, label);
+            sectionList.appendChild(link);
+        });
+
+        const pdfUrl = `${manual.pdf}#page=${page}&zoom=page-width`;
+        pdfFrame.src = pdfUrl;
+        openPdf.href = `${manual.pdf}#page=${page}`;
+    </script>
+</body>
+</html>
